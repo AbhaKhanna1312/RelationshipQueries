@@ -1,0 +1,10 @@
+//Fire a query on the Student look up object (secondary object) to get the student name
+//Fire a query from student look up object (secondary object) on the teachers object (primary object) to get the teacher name
+
+SELECT Name, Teachers__r.Name FROM Student_Lookup__c
+
+//Fire a query on the primary object (teachers) to get their subject
+//Fire a query on the primary object (teachers) to get the data (name & marks %) from the secondary object : student lookup
+
+SELECT Subject__c, (SELECT Name,Marks_percentage__c FROM Students_Lookup__r) 
+FROM Teachers__c
