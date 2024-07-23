@@ -1,0 +1,29 @@
+//Scenario 1
+//  You have ben asked to work on fetching data from Account & Opportunity object
+//  Fire query on secondary object & get data of primary object
+//  Account : Industry field
+//  Opportunity : Amount field
+
+SELECT Amount, Account.Industry FROM Opportunity WHERE Amount = 40000
+
+//Scenario 2
+//You have been asked to work on fetching data from Account & Opportunity object
+//Fire query on the primary object & get data of the secondary object
+
+SELECT Name, (SELECT Amount FROM Opportunities) FROM Account WHERE Industry = 'Chemicals'
+
+
+//Scenario 3
+//Now in the above query (as per scenario 2), we are getting all the records from the Account object where the industry = 'Chemicals'
+//From the Opportunities object (as per scenario 2), we are getting the records where the amount = 30,000
+//Now, if I want to show only those records where the condition of Account & Opportunity object is satisfied, we will fire the below query
+
+SELECT Name, Industry, (SELECT Amount FROM Opportunities WHERE Amount = 30000) 
+FROM Account 
+WHERE Industry = 'Chemicals' AND Id IN (SELECT AccountId FROM Opportunity WHERE Amount = 30000)
+
+//In the above query (as per scenario 3), The AccountId is the field on the Opportunity object that holds the reference to the related Account
+//This subquery retrieves a list of AccountIds from Opportunities where the Amount is 30,000
+//So, Id in this context is checking if the Id of the Account record is present in the list of AccountIds obtained from the subquery
+//So, whether it's a standard or custom lookup relationship, you typically reference the Id field of the parent object in the child object's lookup field
+
